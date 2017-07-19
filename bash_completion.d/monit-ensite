@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# nginx-ensite --- Bash completion function for nginx_ensite/nginx_dissite.
+# monit-enconf --- Bash completion function for monit_enconf/monit_disconf.
 
 # Copyright (C) 2010 António P. P. Almeida <appa@perusio.net>
 
@@ -29,33 +29,33 @@
 # DEALINGS IN THE SOFTWARE.
 
 
-## Handling of both enabled and available sites.
-_nginx_sites() {
-    # Get the available or enabled sites for nginx.
-    COMPREPLY=( $( compgen -W '$( command find /etc/nginx/$1 -type f -printf "%P " 2>/dev/null \
+## Handling of both enabled and available confs.
+_monit_confs() {
+    # Get the available or enabled confs for monit.
+    COMPREPLY=( $( compgen -W '$( command find /etc/monit/$1 -type f -printf "%P " 2>/dev/null \
                | sed 's/[.]conf$//' )' -- $cur  ) )
 }
 
-_nginx_ensite()
+_monit_enconf()
 {
        local cur
 
        COMPREPLY=()
        cur=${COMP_WORDS[COMP_CWORD]}
 
-       _nginx_sites sites-available
+       _monit_confs confs-available
 }
 
-complete -F _nginx_ensite nginx_ensite
+complete -F _monit_enconf monit_enconf
 
-_nginx_dissite()
+_monit_disconf()
 {
        local cur
 
        COMPREPLY=()
        cur=${COMP_WORDS[COMP_CWORD]}
 
-       _nginx_sites sites-enabled
+       _monit_confs confs-enabled
 }
 
-complete -F _nginx_dissite nginx_dissite
+complete -F _monit_disconf monit_disconf
