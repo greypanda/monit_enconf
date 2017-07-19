@@ -1,4 +1,4 @@
-# nginx_ensite and nginx_dissite for quick virtual host enabling and disabling
+# monit_enconf and monit_disconf for quick configuration enabling and disabling
 
 ## Description
 This is a shell (Bash) script that replicates for monit the a2ensite 
