@@ -1,5 +1,7 @@
 # monit_enconf and monit_disconf for quick configuration enabling and disabling
 
+# This is a work-in-progress. The basic operation is working, but docs are still incomplete #
+
 ## Description
 This is a shell (Bash) script that replicates for monit the a2ensite 
 and a2dissite for enabling and disabling configurations. It was
