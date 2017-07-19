@@ -1,6 +1,7 @@
 # monit_enconf and monit_disconf for quick configuration enabling and disabling
 
 # This is a work-in-progress. The basic operation is working, but docs are still incomplete #
+# There is also some un-needed code in the script, but it only produces useless messages. #
 
 ## Description
 This is a shell (Bash) script that replicates for monit the a2ensite 
