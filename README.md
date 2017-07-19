@@ -1,47 +1,48 @@
 # nginx_ensite and nginx_dissite for quick virtual host enabling and disabling
 
 ## Description
-
-This is a shell (Bash) script that replicates for
-[nginx](http://wiki.nginx.org) the [Debian](http://debian.org)
-`a2ensite` and `a2dissite` for enabling and disabling sites as virtual
-hosts in Apache 2.2.
+This is a shell (Bash) script that replicates for monit the a2ensite 
+and a2dissite for enabling and disabling configurations. It was
+forked from pendalff/nginx_ensite.
 
 The original `a2ensite` and `a2dissite` is written in
-Perl. `a2dissite` is a symbolic link to `a2ensite`. Here I followed
-the same approach, i.e., `nginx_dissite` is a symbolic link to
-`nginx_ensite`.
+Perl. `a2dissite` is a symbolic link to `a2ensite`. This follows
+the same approach, i.e., `monit_disconf` is a symbolic link to
+`monit_enconf`.
 
 ## Installation 
 
 Just drop the script and the symbolic link in `/usr/sbin` or other
-location appropriate for your system. Meaning: `cp nginx_* /usr/sbin`.
+location appropriate for your system. Meaning: `cp monit_* /usr/sbin`.
 That's it you're done. 
 
 Note that the script assumes a specific file system topology for your
-`nginx` configuration. Here's the rundown:
+`monit` configuration, close to the Ubuntu installation of monit.
+Here's the rundown:
 
- 1. All virtual hosts configuration files should be under
-    `/etc/nginx/sites-available`. For example the virtual host `foobar`
-    is configured through a file in `/etc/nginx/sites-available`.
+ 1. All configuration files should be under
+    `/etc/monit/conf-available`. For example the monitoring 
+    configuration `foobar` is configured through a file in 
+    `/etc/monit/conf-available`.
 
- 2. After running the script with `foobar` as argument: `nginx_ensite
-    foobar`. A symbolic link `/etc/nginx/sites-enabled/foobar ->
-    /etc/nginx/sites-available/foobar` is created. Note that if the
-    `/etc/nginx/sites-enabled` directory doesn't exist the script
+ 2. After running the script with `foobar` as argument: `monit_enconf
+    foobar`, a symbolic link `/etc/monit/conf-enabled/foobar ->
+    /etc/monit/conf-available/foobar` is created. Note that if the
+    `/etc/monit/conf-enabled` directory doesn't exist the script
     creates it.
 
- 3. The script invokes `nginx -t` to test if the configuration is
+ 3. The script invokes `monit -t` to test if the configuration is
     correct. If the test fails no symbolic link is created and an error
     is signaled.
 
- 4. If everything is correct now just reload nginx, in Debian based
-    systems that means invoking `/etc/init.d/nginx reload`.
+ 4. If everything is correct now just reload monit, in Debian based
+    systems that means invoking `/etc/init.d/monit reload`.
+    ( In modern distributions, this would be systemctl reload monit. )
 
- 5. Now point the browser to the newly configured host and everything
+ 5. Now point the browser to the monit web host and everything
     should work properly assuming your configuration is sensible.
 
- 6. To disable the site just run `nginx_dissite foobar`. Reload nginx
+ 6. To disable the site just run `monit_disconf foobar`. Reload monit
     to update the running environment.
 
 ## Requirements
@@ -64,12 +65,12 @@ enabled and disabled located in the `bash_completion.d` directory.
 To make use of it you should:
 
  1. Source the script to Bash by issuing either `source
-    nginx-ensite` or `. nginx-ensite`. 
+    monit-enconf` or `. monit-enconf`. 
 
- 2. Now when you invoke `nginx_ensite` the sites under
-    `/etc/nginx/sites-available` will appear as hypothesis for
-    completion. For `nginx_dissite` you get all the sites listed in
-    `/etc/nginx/sites-enabled` as possible completions.
+ 2. Now when you invoke `monit_enconf` the sites under
+    `/etc/monit/conf-available` will appear as hypothesis for
+    completion. For `monit_disconf you get all the sites listed in
+    `/etc/monit/conf-enabled` as possible completions.
 
  3. To get the completion script to be sourced upon login please
     copy it to `/etc/bash_completion.d/` or whatever location your
